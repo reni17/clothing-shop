@@ -1,27 +1,49 @@
 import '../src/categories.styles.scss'
+import {Routes, Route} from 'react-router-dom'
+import Home from '../src/routes/home/Home';
+import Navigation from './routes/navigation/Navigation';
+import SignIn from './routes/sign-in/SignIn'
+
 function App() {
 
-const categories = [
-  {title: 'Hats', id: 0},
-  {title: 'Jackets',  id: 1},
-  {title: 'Sneakers',  id: 2},
-  {title: 'Women', id: 3},
-  {title: 'Men',  id: 4},
+const categories =[
+  {
+    "id": 1,
+    "title": "hats",
+    "imageUrl": "https://i.ibb.co/cvpntL1/hats.png"
+  },
+  {
+    "id": 2,
+    "title": "jackets",
+    "imageUrl": "https://i.ibb.co/px2tCc3/jackets.png"
+  },
+  {
+    "id": 3,
+    "title": "sneakers",
+    "imageUrl": "https://i.ibb.co/0jqHpnp/sneakers.png"
+  },
+  {
+    "id": 4,
+    "title": "womens",
+    "imageUrl": "https://i.ibb.co/GCCdy8t/womens.png"
+  },
+  {
+    "id": 5,
+    "title": "mens",
+    "imageUrl": "https://i.ibb.co/R70vBrQ/men.png"
+  }
 ]
 
+
   return (
-    <div className="categories-container">
-     {categories.map(({title, id}) => 
-        <div key={id} className="category-container">
-          <div className="background-image"></div>
-          <div className="category-body-container">
-            <h2>{title}</h2>
-            <p>Shop now</p>
-          </div>
-        </div>
-       
-     )}
-    </div>
+  <Routes>
+    <Route path='/' element = {<Navigation/>}>
+      <Route path='/' index element = {<Home categories = {categories}></Home>}></Route>
+      <Route path='shop' index element = {<Home categories = {categories}></Home>}></Route>
+      <Route path='sign-in' index element = {<SignIn categories = {categories}></SignIn>}></Route>
+
+    </Route>
+  </Routes>
   );
 }
 
