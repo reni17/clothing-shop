@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { createUserWithEmailAndPass, createUserDocFromAuth } from "../../../utils/firebase"
-import SignUpInput from "../SignUp-inputs/SignUpInputs"
-import '../SIgnUp-form/SignUpForm.scss'
+import SignUpInput from "../../sign-up/SignUp-inputs/SignUpInputs"
+import './SignUpForm.scss'
 import Button from "../SignUp-buttons/Button"
 const SignUpForm = () => {
     
@@ -39,7 +39,7 @@ const SignUpForm = () => {
      }
     return(
         <div className="sign-up-container">
-           <h1> Sign Up with your email and pssword</h1>
+           <h2> Sign Up with your email and pssword</h2>
             <form onSubmit={submitHandler}>
                 <SignUpInput label='Display name' value={displayName} onChange={changeHandler} name = 'displayName' required type = 'text'/>
      

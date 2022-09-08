@@ -1,4 +1,4 @@
-import '../SignUp-buttons/Button.scss'
+import './Button.scss'
 const Button = ({children, buttonType, ...otherProps}) => {
     const buttonClasses = {
         inverted: 'inverted',
