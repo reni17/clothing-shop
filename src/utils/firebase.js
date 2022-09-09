@@ -6,7 +6,9 @@ import {
     GoogleAuthProvider,
     // FacebookAuthProvider
     createUserWithEmailAndPassword,
-    signInWithEmailAndPassword
+    signInWithEmailAndPassword,
+    signOut,
+    onAuthStateChanged
 } from 'firebase/auth'
 
 import {
@@ -82,3 +84,9 @@ return userDocRef
     }
     return await signInWithEmailAndPassword(auth, email, password)
   }
+
+  export const logOut = async () => {
+    return await signOut(auth)
+  }
+
+  export const onAuthStateListener = async(callback) => onAuthStateChanged(auth, callback)
