@@ -6,15 +6,14 @@ import SignIn from "./routes/sign-in/SignIn";
 import { UserContext } from "./contexts/UserContext";
 import {ProductContext} from './contexts/ProductContext'
 import { useState, useEffect } from "react";
-import { onAuthStateListener, createUserDocFromAuth} from "./utils/firebase";
+import { onAuthStateListener, createUserDocFromAuth, addCollectionAndDocuments, getCategoriesAndDocuments} from "./utils/firebase";
 import { Shop } from "./routes/shop/Shop";
-import ShopData from './shop-data.json'
 import { CartContext } from "./contexts/CartContext";
 import Checkout from "./routes/checkout/Checkout";
 
 function App() {
   const [user, setUser] = useState(null)
-  const [products, setProducts] = useState(ShopData)
+  const [products, setProducts] = useState([])
   const [cart, setCart] = useState(false)
   const [cartItems, setCartItems] = useState([])
   const [cartCounter, setCartCounter] = useState(0)
@@ -28,6 +27,15 @@ function App() {
       setUser(user)
     })
  
+  }, [])
+
+
+  useEffect(() => {
+    const getCategoriesMap = async() => {
+      const categoryMap = await getCategoriesAndDocuments()
+      console.log(categoryMap);
+    }
+    getCategoriesMap()
   }, [])
 
   useEffect(() => {
