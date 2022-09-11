@@ -10,11 +10,15 @@ import { onAuthStateListener, createUserDocFromAuth} from "./utils/firebase";
 import { Shop } from "./routes/shop/Shop";
 import ShopData from './shop-data.json'
 import { CartContext } from "./contexts/CartContext";
+import Checkout from "./routes/checkout/Checkout";
 
 function App() {
   const [user, setUser] = useState(null)
   const [products, setProducts] = useState(ShopData)
   const [cart, setCart] = useState(false)
+  const [cartItems, setCartItems] = useState([])
+  const [cartCounter, setCartCounter] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
 
   useEffect(() => {
     const unsubscribe = onAuthStateListener((user) => {
@@ -25,6 +29,31 @@ function App() {
     })
  
   }, [])
+
+  useEffect(() => {
+    const newCartCount = cartItems.reduce((total, item) => total += item.quantity, 0)
+    setCartCounter(newCartCount)
+    const totalPrice = cartItems.reduce((result, item) => result += item.quantity * item.price, 0)
+    setTotalPrice(totalPrice) 
+  }, [cartItems])
+
+
+  const addCartItem =(cartItems, productToAdd) => {
+
+    const existingItem = cartItems.find(item => item.id === productToAdd.id)
+    if(existingItem){
+     return cartItems.map(cartItem => 
+      cartItem.id == productToAdd.id ?{ ...cartItem, quantity: cartItem.quantity +1} : cartItem
+      )
+    }else{
+      return [...cartItems, {...productToAdd, quantity:1}]   
+    }
+
+  }
+
+  const addItemToCart = (productToAdd) => {
+    setCartItems(addCartItem(cartItems, productToAdd))
+  }
 
   const categories = [
     {
@@ -57,7 +86,7 @@ function App() {
   return (
     <UserContext.Provider value={{user, setUser}}>
       <ProductContext.Provider value = {{products, setProducts}}>
-        <CartContext.Provider value = {{cart, setCart}}>
+        <CartContext.Provider value = {{cart, setCart, cartItems, setCartItems, addItemToCart, cartCounter, totalPrice, setTotalPrice}}>
           <Routes>
             <Route path="/" element={<Navigation />}>
               <Route
@@ -74,6 +103,11 @@ function App() {
                 path="sign-in"
                 index
                 element={<SignIn ></SignIn>}
+              ></Route>
+              <Route
+              path="checkout"
+              index
+              element ={<Checkout/>}
               ></Route>
             </Route>
           </Routes>
