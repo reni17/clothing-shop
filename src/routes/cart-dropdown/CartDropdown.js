@@ -19,7 +19,7 @@ const checkoutPage = () => {
             <CartItems>
                 {cartItems.length ?  cartItems.map(el => <CartItem key={el.id} item = {el}/>) : <EmptyMess>Your car is empty</EmptyMess>}
             </CartItems>
-            <Button onClick = {checkoutPage}>Go to checkout</Button>
+            <Button onClick = {checkoutPage}>Checkout</Button>
         </CartDropdownContainer>
     )
 }
