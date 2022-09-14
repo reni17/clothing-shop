@@ -65,7 +65,7 @@ const SignInForm = () => {
             <SignUpInput label='Email' value={fields.email} onChange={changeHandler} name = 'email' required type = 'email'/>
             <SignUpInput label='Paasowrd' value={fields.password} onChange={changeHandler} name = 'password' required type = 'password'/>
 
-            <div className="buttonsContainer">
+            <div>
             <Button type = 'submit' buttonType=''> SIGN IN</Button>
             <Button buttonType='google' type = 'button' onClick={logGoogleUser}>Sign up with Google</Button>
             {/* <Button buttonType='google' type = 'button' onClick={signInWithGoogleRedirect}>Redirect</Button> */}
