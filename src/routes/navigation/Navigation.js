@@ -13,7 +13,6 @@ import { LogoContainer, NavigationContainer, Navlinks, Navlink } from "./Navigat
 const Navigation = () => {
   const { user } = useContext(UserContext);
   const {cart} = useContext(CartContext)
-  console.log(cart);
 
   return (
     <>
