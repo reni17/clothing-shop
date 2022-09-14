@@ -5,7 +5,7 @@ const Button = ({children, buttonType, ...otherProps}) => {
         google: 'google-sign-in'
     }
     return (
-        <button className={`button-container ${buttonClasses[buttonType]}` }{...otherProps}>{children}</button>
+        <button className={`buttonsContainer ${buttonClasses[buttonType]}` }{...otherProps}>{children}</button>
 
     )
 }

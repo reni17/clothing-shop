@@ -4,7 +4,7 @@ import Home from "../src/routes/home/Home";
 import Navigation from "./routes/navigation/Navigation";
 import SignIn from "./routes/sign-in/SignIn";
 import { UserContext } from "./contexts/UserContext";
-import {ProductContext} from './contexts/ProductContext'
+import {CategoriesContext} from './contexts/CategoriesContext'
 import { useState, useEffect } from "react";
 import { onAuthStateListener, createUserDocFromAuth, addCollectionAndDocuments, getCategoriesAndDocuments} from "./utils/firebase";
 import { Shop } from "./routes/shop/Shop";
@@ -13,7 +13,7 @@ import Checkout from "./routes/checkout/Checkout";
 
 function App() {
   const [user, setUser] = useState(null)
-  const [products, setProducts] = useState([])
+  const [categoriesMap, setCategoriesMap] = useState([])
   const [cart, setCart] = useState(false)
   const [cartItems, setCartItems] = useState([])
   const [cartCounter, setCartCounter] = useState(0)
@@ -33,7 +33,7 @@ function App() {
   useEffect(() => {
     const getCategoriesMap = async() => {
       const categoryMap = await getCategoriesAndDocuments()
-      console.log(categoryMap);
+      setCategoriesMap(categoryMap)
     }
     getCategoriesMap()
   }, [])
@@ -93,7 +93,7 @@ function App() {
 
   return (
     <UserContext.Provider value={{user, setUser}}>
-      <ProductContext.Provider value = {{products, setProducts}}>
+      <CategoriesContext.Provider value = {{categoriesMap}}>
         <CartContext.Provider value = {{cart, setCart, cartItems, setCartItems, addItemToCart, cartCounter, totalPrice, setTotalPrice}}>
           <Routes>
             <Route path="/" element={<Navigation />}>
@@ -103,9 +103,9 @@ function App() {
                 element={<Home categories={categories}></Home>}
               ></Route>
               <Route
-                path="shop"
+                path="shop/*"
                 index
-                element={<Shop categories={categories}></Shop>}
+                element={<Shop/>}
               ></Route>
               <Route
                 path="sign-in"
@@ -120,7 +120,7 @@ function App() {
             </Route>
           </Routes>
        </CartContext.Provider>
-      </ProductContext.Provider>
+      </CategoriesContext.Provider>
     </UserContext.Provider>
   );
 }
