@@ -11,7 +11,7 @@ navigate(route)
         <DirectoryItemContainer key={id} >
         <BackgroundImage imageUrl={imageUrl} ></BackgroundImage>
         <Body onClick={NavigateHandler}>
-          <h2>{title}</h2>
+          <h2>{title.toUpperCase()}</h2>
           <p>Shop now</p>
         </Body>
       </DirectoryItemContainer>
