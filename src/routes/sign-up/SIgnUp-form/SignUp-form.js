@@ -4,8 +4,11 @@ import SignUpInput from "../../sign-up/SignUp-inputs/SignUpInputs"
 import './SignUpForm.scss'
 import Button from "../SignUp-buttons/Button"
 import { UserContext } from "../../../contexts/UserContext"
+import { selectUser } from "../../../store/user/userSelector"
+import { useDispatch, useSelector } from "react-redux"
+import { setUser } from "../../../store/user/userAction"
 const SignUpForm = () => {
-    
+    const dispatch = useDispatch()
        let defaultFields = {
             displayName : '',
             email : '',
@@ -14,7 +17,7 @@ const SignUpForm = () => {
     
         }
         const [fields, setFields] = useState(defaultFields)
-        const {setUser} = useContext(UserContext)
+        // const {setUser} = useContext(UserContext)
         const {displayName, email, password, rePassword} = fields
     
         const resetValues = () => {
@@ -31,8 +34,6 @@ const SignUpForm = () => {
         }
         try {
             const {user} = await createUserWithEmailAndPass(email, password)
-            console.log(user);
-            setUser(user)
             await createUserDocFromAuth(user, {displayName: {displayName}})
             resetValues()
         } catch (err) {
@@ -42,7 +43,7 @@ const SignUpForm = () => {
      }
     return(
         <div className="sign-up-container">
-           <h2> Sign Up with your email and pssword</h2>
+           <h2> Sign Up with your email and password</h2>
             <form onSubmit={submitHandler}>
                 <SignUpInput label='Display name' value={displayName} onChange={changeHandler} name = 'displayName' required type = 'text'/>
      

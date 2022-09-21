@@ -3,17 +3,18 @@ import "../navigation/Navigation";
 import { ReactComponent as CrownLogo } from "../../assets/crown.svg";
 import "./Navigation.styles.js";
 import { useContext } from "react";
-import { UserContext } from "../../contexts/UserContext";
 import { logOut } from "../../utils/firebase";
 import CartIcon from "../cart-icon/CartIcon";
 import CartDropdown from "../cart-dropdown/CartDropdown";
-import { CartContext } from "../../contexts/CartContext";
+// import { CartContext } from "../../contexts/CartContext";
 import { LogoContainer, NavigationContainer, Navlinks, Navlink } from "./Navigation.styles.js";
-
+import { useSelector } from "react-redux";
+import { selectUser } from "../../store/user/userSelector";
+import { selectCart } from "../../store/cart/cartSelector";
 const Navigation = () => {
-  const { user } = useContext(UserContext);
-  const {cart} = useContext(CartContext)
-
+  const currentUser = useSelector(selectUser)
+  // const {cart} = useContext(CartContext)
+  const cart = useSelector(selectCart)
   return (
     <>
       <NavigationContainer as = 'span'>
@@ -25,10 +26,10 @@ const Navigation = () => {
           <Navlink as = {Link} to="/shop">
             SHOP
           </Navlink>
-          {user ? (
-            <span onClick={logOut} >
+          {currentUser ? (
+            <Navlink onClick={logOut} >
               SIGN OUT
-            </span>
+            </Navlink>
           ) : (
             <Navlink as = {Link} to="/sign-in">
               SIGN IN

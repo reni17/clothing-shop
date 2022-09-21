@@ -4,23 +4,25 @@ import { auth, signInWithGooglePopup, createUserDocFromAuth, signInWithGoogleRed
 import { getRedirectResult } from "firebase/auth"
 import SignUpInput from "../../sign-up/SignUp-inputs/SignUpInputs"
 import './SignInForm.scss'
+import { useDispatch, useSelector } from "react-redux"
+import { selectUser } from "../../../store/user/userSelector"
+import { setUser } from "../../../store/user/userAction"
 
 
 const SignInForm = () => {
-
     const logGoogleUser = async () => {
         await signInWithGooglePopup()
     }
 
-    useEffect(() => {
-        async function getResult() { 
-            const res = await getRedirectResult(auth)
-            if(res) {
-            const userDocRef = await createUserDocFromAuth(res.user)
-            }
-        }
-       getResult()
-    }, [])
+    // useEffect(() => {
+    //     async function getResult() { 
+    //         const res = await getRedirectResult(auth)
+    //         if(res) {
+    //         const userDocRef = await createUserDocFromAuth(res.user)
+    //         }
+    //     }
+    //    getResult()
+    // }, [])
 
 
     let defaultFields = {
@@ -42,7 +44,7 @@ const SignInForm = () => {
         e.preventDefault()
 
         try {
-            const {user} = await signInUserWithEmailAndPass(fields.email, fields.password)
+            await signInUserWithEmailAndPass(fields.email, fields.password)
             resetValues()
         } catch (error) {
             switch(error.code){

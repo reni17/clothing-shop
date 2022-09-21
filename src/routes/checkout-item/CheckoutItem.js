@@ -1,10 +1,16 @@
 import { useContext } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { CartContext } from '../../contexts/CartContext'
+import { addItemToCart } from '../../store/cart/cartAction'
+import { selectCartItems } from '../../store/cart/cartSelector'
 import './CheckoutItem.scss'
 
 const Checkoutitem = ({item}) => {
+  const dispatch = useDispatch()
     const {name, imageUrl, price, quantity} = item
-    const {cartItems, setCartItems} = useContext(CartContext)
+    const cartItems = useSelector(selectCartItems)
+
+    // const {cartItems, updateCartItemsReducer} = useContext(CartContext)
 
     const buttonsHandler = (currentItem, e) => {
         const eventClass = e.target.className
@@ -21,7 +27,7 @@ const Checkoutitem = ({item}) => {
           newItems = cartItems.filter(el => el.id !== currentItem.id) 
 
         }
-        setCartItems(newItems) 
+        dispatch(addItemToCart(cartItems, newItems))
       }
 
     
