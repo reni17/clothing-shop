@@ -6,7 +6,7 @@ const selectCategories = createSelector(
   (categories) => categories.categories
 )
 
-export const selectCategoriesMap =createSelector(
+export const selectCategoriesMap = createSelector(
   [selectCategories],
   categories => categories
 .reduce((acc, category) => {
@@ -14,3 +14,8 @@ export const selectCategoriesMap =createSelector(
     acc[title.toLowerCase()] = items
     return acc
   }, {}))
+
+export const selectCategoriesIsLoading = createSelector(
+  [selectCategories],
+  (categories) => categories.isLoading
+)

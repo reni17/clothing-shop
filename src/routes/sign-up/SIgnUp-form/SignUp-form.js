@@ -3,10 +3,9 @@ import { createUserWithEmailAndPass, createUserDocFromAuth } from "../../../util
 import SignUpInput from "../../sign-up/SignUp-inputs/SignUpInputs"
 import './SignUpForm.scss'
 import Button from "../SignUp-buttons/Button"
-import { UserContext } from "../../../contexts/UserContext"
 import { selectUser } from "../../../store/user/userSelector"
 import { useDispatch, useSelector } from "react-redux"
-import { setUser } from "../../../store/user/userAction"
+import { setUser, signUpStart } from "../../../store/user/userAction"
 const SignUpForm = () => {
     const dispatch = useDispatch()
        let defaultFields = {
@@ -33,8 +32,7 @@ const SignUpForm = () => {
             return
         }
         try {
-            const {user} = await createUserWithEmailAndPass(email, password)
-            await createUserDocFromAuth(user, {displayName: {displayName}})
+            dispatch(signUpStart(email, password, displayName))
             resetValues()
         } catch (err) {
             console.log('User creation error:' , err);

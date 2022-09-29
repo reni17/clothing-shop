@@ -25,4 +25,21 @@ export const addItemToCart = (cartItems, productToAdd) => {
   }
     
 
-   
+export const incrementItem = (cartItems, product) => {
+  const newCartItmes = addCartItem(cartItems, product)
+    return createAction(CART_ACTIONS.SET_CART_ITEMS, newCartItmes)
+}
+
+
+export const decrementItem = (cartItems, product) => {
+  if(product.quantity == 1){
+    return
+}
+const newCartItmes = cartItems.map(el => el.id == product.id ? {...el, quantity: el.quantity -1} : el) 
+return createAction(CART_ACTIONS.SET_CART_ITEMS, newCartItmes)
+}
+
+export const removeItem = (cartItems, product) => {
+  const newCartItmes = cartItems.filter(el => el.id !== product.id) 
+  return createAction(CART_ACTIONS.SET_CART_ITEMS, newCartItmes)
+}

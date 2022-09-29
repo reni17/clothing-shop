@@ -90,7 +90,7 @@ const firebaseConfig = {
             console.log('Login error:', error.message);
         }
         }
-return userDocRef
+return userSnapshot
   }
 
 
@@ -114,3 +114,16 @@ return userDocRef
   }
 
   export const onAuthStateListener = async(callback) => onAuthStateChanged(auth, callback)
+
+  export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = onAuthStateChanged(
+        auth,
+         (userAuth) => {
+          unsubscribe()
+          resolve(userAuth)
+        }, 
+        reject
+      )
+    })
+  }

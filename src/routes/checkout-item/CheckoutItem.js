@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { CartContext } from '../../contexts/CartContext'
-import { addItemToCart } from '../../store/cart/cartAction'
+import { addItemToCart, decrementItem, incrementItem, removeItem } from '../../store/cart/cartAction'
 import { selectCartItems } from '../../store/cart/cartSelector'
 import './CheckoutItem.scss'
 
@@ -27,10 +27,13 @@ const Checkoutitem = ({item}) => {
           newItems = cartItems.filter(el => el.id !== currentItem.id) 
 
         }
-        dispatch(addItemToCart(cartItems, newItems))
+        
+        dispatch(addItemToCart(newItems, currentItem))
       }
 
-    
+    const increment =() => dispatch(incrementItem(cartItems, item))
+    const decrement =() => dispatch(decrementItem(cartItems, item))
+    const remove =() => dispatch(removeItem(cartItems, item))
     return(
         <div className='checkout-item-container'>
             <div className='image-container'>
@@ -38,12 +41,12 @@ const Checkoutitem = ({item}) => {
             </div>
             <span className='name'>{name}</span>
             <span className='quantity'>
-                <div onClick={(e) => buttonsHandler(item, e)} className='arrow dec'>&#10094;</div>
+                <div onClick={decrement} className='arrow dec'>&#10094;</div>
                   <span className='value'>{quantity}</span>
-                <div onClick={(e) => buttonsHandler(item, e)} className='arrow inc'>&#10095;</div>
+                <div onClick={increment} className='arrow inc'>&#10095;</div>
             </span>
             <span className='price'>{price}</span>
-            <div onClick={(e) => buttonsHandler(item, e)} className='remove-button'>&#10005;</div>
+            <div onClick={remove} className='remove-button'>&#10005;</div>
         </div>
     )
 }

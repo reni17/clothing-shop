@@ -6,12 +6,15 @@ import SignUpInput from "../../sign-up/SignUp-inputs/SignUpInputs"
 import './SignInForm.scss'
 import { useDispatch, useSelector } from "react-redux"
 import { selectUser } from "../../../store/user/userSelector"
-import { setUser } from "../../../store/user/userAction"
+import { googleSignInStart, emailSignInStart } from "../../../store/user/userAction"
 
 
 const SignInForm = () => {
+    const dispatch = useDispatch()
+
+
     const logGoogleUser = async () => {
-        await signInWithGooglePopup()
+       dispatch(googleSignInStart())
     }
 
     // useEffect(() => {
@@ -44,7 +47,7 @@ const SignInForm = () => {
         e.preventDefault()
 
         try {
-            await signInUserWithEmailAndPass(fields.email, fields.password)
+           dispatch(emailSignInStart(fields.email, fields.password))
             resetValues()
         } catch (error) {
             switch(error.code){

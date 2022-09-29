@@ -14,10 +14,10 @@ export const selectCartItems = createSelector(
 
 export const selectCartCount = createSelector(
     [selectCartReducer],
-    cart => cart.reduce((total, item) => total += item.quantity, 0)
+    cart => cart.cartItems.reduce((total, item) => total += item.quantity, 0)
     )
 
 export const selectCartTotal = createSelector(
     [selectCartReducer],
-    cartItems => cartItems.reduce((result, item) => result += item.quantity * item.price, 0)
+    cart => cart.cartItems.reduce((result, item) => result += item.quantity * item.price, 0)
 )

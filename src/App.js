@@ -4,25 +4,17 @@ import Home from "../src/routes/home/Home";
 import Navigation from "./routes/navigation/Navigation";
 import SignIn from "./routes/sign-in/SignIn";
 import { useState, useEffect, useReducer } from "react";
-import { onAuthStateListener, createUserDocFromAuth, addCollectionAndDocuments, getCategoriesAndDocuments} from "./utils/firebase";
 import { Shop } from "./routes/shop/Shop";
 import Checkout from "./routes/checkout/Checkout";
-import {setUser} from './store/user/userAction'
+import {checkUserSession} from './store/user/userAction'
 import {useDispatch} from 'react-redux'
 function App() {
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-    
-      const unsubscribe = onAuthStateListener((user) => {
-      if(user) {
-        createUserDocFromAuth(user);
-      }
-     dispatch(setUser(user))
-    })
-    
-  }, [dispatch])
+    dispatch(checkUserSession())
+  }, [])
 
 
   return (
